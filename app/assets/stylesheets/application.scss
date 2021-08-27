@@ -11,3 +11,29 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+a {
+  color: gray;
+  &:hover {
+    text-decoration: none;
+    color: rgba(10,10,10,1)
+  }
+}
+
+h1 a, i {
+  font-size: 30px;
+  letter-spacing: 6px;
+}
+
+ul a {
+  transition: ease 0.5s;
+
+  &:hover {
+  font-size: larger;
+  }
+}
+
+li img {
+  height: 150px;
+  object-fit: cover;
+}

@@ -1,0 +1,42 @@
+<div class="container">
+
+  <ul class="list-group mt-3">
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <strong>
+        List: <%= @list.name %>
+      </strong>
+    </li>
+
+    <% @list.bookmarks.each do |bookmark| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <div class="mr-3">
+            <%# include image here %>
+            <%= image_tag bookmark.movie.poster_url, alt: '', class: ''%>
+          </div>
+          <strong class="mr-3">
+            <%= bookmark.movie.title %>
+          </strong>
+          || rating: <%= bookmark.movie.rating %>
+        </div>
+        <%# add checkbox seen/not-seen here %>
+        <%= link_to bookmark_path(bookmark.id),
+          method: :delete,
+          data: {confirm: "Are you sure?"},
+          class: '' do %>
+            <i class="fas fa-trash-alt ml-3" style="font-size: 20px"></i>
+        <% end %>
+      </li>
+    <% end %>
+
+    <%= link_to new_list_bookmark_path(@list.id), method: :get, class: '' do %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        + Add movie
+      </li>
+    <% end %>
+
+  </ul>
+
+  <%= link_to 'Go back', lists_path, class: "btn btn-primary mt-3 text-white"%>
+</div>

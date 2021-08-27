@@ -1,0 +1,7 @@
+<div class="container">
+  <%= simple_form_for(@list) do |f| %>
+    <%= f.input :name %>
+    <%= f.submit :submit, class: 'btn btn-primary mt-3 text-white' %>
+  <% end %>
+  <%= link_to 'Go back', lists_path, class: "btn btn-primary mt-3 text-white"%>
+</div>

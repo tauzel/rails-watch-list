@@ -11,6 +11,19 @@ require 'rest-client'
 require 'faker'
 require 'json'
 
+
+puts "---------------------------------------------------------------"
+puts "-- Cleaning lists (and bookmarks as a result)... --------------"
+puts "---------------------------------------------------------------"
+
+List.destroy_all
+
+puts "---------------------------------------------------------------"
+puts "-- Cleaning the movie db from previous instances ... ----------"
+puts "---------------------------------------------------------------"
+
+Movie.destroy_all
+
 puts "---------------------------------------------------------------"
 puts "-- Retrieving stuff from The Movie Db API ... -----------------"
 puts "---------------------------------------------------------------"
@@ -31,6 +44,16 @@ top_movies.each do |movie_hash|
   p movie.save
   movie.save!
 end
+
+puts "---------------------------------------------------------------"
+puts "-- Populating fake lists ... ----------------------------------"
+puts "---------------------------------------------------------------"
+
+List.create!(name: "Portuguese classics")
+List.create!(name: "Comedy")
+List.create!(name: "Drama")
+List.create!(name: "Horror")
+List.create!(name: "SciFi")
 
 puts "---------------------------------------------------------------"
 puts "-- Finished! over to you Boss ---------------------------------"
