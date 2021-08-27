@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   end
   resources :bookmarks, only: [ :destroy ]
 
+  # NB: tried to design a route for modal pop-up here
+  # get '/lists/:id/bookmarks/new', to: 'bookmarks#new'
+
   root to: 'lists#index'
 end
