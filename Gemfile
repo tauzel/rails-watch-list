@@ -53,4 +53,8 @@ gem 'simple_form'
 gem 'faker'
 gem 'rest-client'
 
+# Store secret keys and leave them out of Github
 gem 'dotenv-rails', groups: [:development, :test]
+
+# Separate user assets storage
+gem 'cloudinary', '~> 1.16.0'
