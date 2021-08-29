@@ -1,11 +1,6 @@
 class BookmarksController < ApplicationController
   before_action :fetch_list, only: [:new, :create]
 
-
-  def new
-    @bookmark = Bookmark.new
-  end
-
   def create
     @bookmark = Bookmark.new(bookmark_params)
     @bookmark.list = @list

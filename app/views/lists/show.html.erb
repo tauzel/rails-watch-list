@@ -5,25 +5,42 @@
     <h1>
       <%= @list.name %>
     </h1>
-    <% if @list.user_img.attached? %>
-      <%= cl_image_tag @list.user_img.key, height: 150, crop: :fit, class: 'rounded-circle'%>
-    <% end %>
+
+    <div class="d-flex align-items-end flex-column">
+        <% if @list.user_img.attached? %>
+            <%= cl_image_tag @list.user_img.key, height: 150, crop: :fit, class: 'rounded'%>
+          <% else %>
+
+          <%= link_to '#', class: "btn btn-light", data: {toggle: "modal", target: "#AddListImgModal" } do %>
+           + Add an image
+          <% end %>
+
+        <% end %>
+    </div>
   </div>
 
   <ul class="list-group mt-3">
 
     <% @list.bookmarks.each do |bookmark| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
+
         <div class="d-flex align-items-center">
           <div class="mr-3">
             <%# include image here %>
-            <%= image_tag bookmark.movie.poster_url, alt: '', class: ''%>
+            <%= image_tag bookmark.movie.poster_url, alt: '', class: 'poster-list' %>
           </div>
-          <strong class="mr-3">
-            <%= bookmark.movie.title %>
-          </strong>
-          || rating: <%= bookmark.movie.rating %>
+
+          <div>
+            <div>
+              <strong class="mr-3">
+                <%= bookmark.movie.title %>
+              </strong>
+              || rating: <%= bookmark.movie.rating %>
+            </div>
+            <%= bookmark.comment %>
+          </div>
         </div>
+
         <%# add checkbox seen/not-seen here %>
         <%= link_to bookmark_path(bookmark.id),
           method: :delete,
@@ -35,40 +52,79 @@
     <% end %>
 
     <%# Modal trigger %>
-    <%# <%= link_to new_list_bookmark_path(@list.id), method: :get, class: '', data: {toggle: "modal", target: "#exampleModal" } do %>
-    <%= link_to new_list_bookmark_path(@list.id), method: :get, class: '', data: {toggle: "modal", target: "#exampleModal" } do %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        + Add movie
+    <%= link_to '#', data: {toggle: "modal", target: "#AddBookmarkModal" } do %>
+      <li class="list-group-item">
+        + Add bookmark
       </li>
     <% end %>
-
-    <%# <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button> %>
-
-    <%# Modal %>
-<%#
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div> %>
 
   </ul>
 
   <%= link_to 'Go back', lists_path, class: "btn btn-primary mt-3 text-white"%>
+</div>
+
+<%# ############################################################### %>
+<%# Modal Add Bookmark %>
+
+<div class="modal fade" id="AddBookmarkModal" tabindex="-1" role="dialog" aria-labelledby="AddBookmarkModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="AddBookmarkModalLabel">Add bookmark</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="container mt-3">
+
+          <%= simple_form_for [@list, Bookmark.new] do |f| %>
+          <%= f.association :movie, collection: Movie.remaining %>
+          <%= f.input :comment %>
+
+        </div>
+      </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit :submit, class: 'btn btn-primary text-white' %>
+          <% end %>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<%# ############################################################### %>
+<%# Modal Add Image to list %>
+
+<div class="modal fade" id="AddListImgModal" tabindex="-1" role="dialog" aria-labelledby="AddListImgModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="AddListImgModalLabel">Add an image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <%= simple_form_for(@list) do |f| %>
+        <%# Users posting images %>
+        <%= f.input :user_img, as: :file %>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.submit :submit, class: 'btn btn-primary text-white' %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
 </div>

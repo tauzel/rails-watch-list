@@ -7,10 +7,9 @@
             <div>
 
 
-              <%# <% if list.user_img.attached? %>
-                <%# <%= cl_image_tag list.user_img.key, height: 300, width: 400, crop: :fill %>
-              <%# <% end %>
-
+              <% if list.user_img.attached? %>
+                <%= cl_image_tag list.user_img.key, height: 50, crop: :thumb, class: "rounded-circle" %>
+              <% end %>
 
               <%= list.name%>
             </div>
@@ -33,11 +32,3 @@
     <% end %>
   </ul>
 </div>
-
-<%# CLoudinary testing %>
-<%# <br> %>
-<%# <%= cl_image_tag("oifuirojouaqddd0qth8", width: 400, height: 300, crop: :fit) %>
-<%# crop modes %>
-<%# Crop modes: scale, fit, fill, limit, pad, crop %>
-<!-- for face detection -->
-<%# <%= cl_image_tag("haskg0s2hrkiabe3i7sy", width: 150, height: 150, crop: :thumb, gravity: :face) %>

@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :fetch_list, only: [:show, :destroy]
+  before_action :fetch_list, only: [:show, :destroy, :update]
 
   def index
     @lists = List.all
@@ -23,6 +23,12 @@ class ListsController < ApplicationController
     @list.destroy
 
     redirect_to lists_path
+  end
+
+  def update
+    @list.update(list_params)
+
+    redirect_to list_path(@list.id)
   end
 
   private
