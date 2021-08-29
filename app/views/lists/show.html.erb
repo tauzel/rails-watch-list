@@ -7,14 +7,14 @@
     </h1>
 
     <div class="d-flex align-items-end flex-column">
-        <% if @list.user_img.attached? %>
+        <%= link_to '#', data: {toggle: "modal", target: "#AddListImgModal" } do %>
+          <% if @list.user_img.attached? %>
             <%= cl_image_tag @list.user_img.key, height: 150, crop: :fit, class: 'rounded'%>
           <% else %>
-
-          <%= link_to '#', class: "btn btn-light", data: {toggle: "modal", target: "#AddListImgModal" } do %>
-           + Add an image
+            <span class="btn btn-light">
+            + Add an image
+            </span>
           <% end %>
-
         <% end %>
     </div>
   </div>
@@ -105,7 +105,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="AddListImgModalLabel">Add an image</h5>
+        <h5 class="modal-title" id="AddListImgModalLabel">
+        <% if @list.user_img.attached? %>
+          Update image
+        <% else %>
+          Add image
+        <% end %>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
