@@ -1,12 +1,16 @@
 <div class="container">
 
-  <ul class="list-group mt-3">
+  <br>
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>
+      <%= @list.name %>
+    </h1>
+    <% if @list.user_img.attached? %>
+      <%= cl_image_tag @list.user_img.key, height: 150, crop: :fit, class: 'rounded-circle'%>
+    <% end %>
+  </div>
 
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <strong>
-        List: <%= @list.name %>
-      </strong>
-    </li>
+  <ul class="list-group mt-3">
 
     <% @list.bookmarks.each do |bookmark| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
